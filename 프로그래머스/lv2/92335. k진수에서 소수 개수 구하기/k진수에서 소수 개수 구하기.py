@@ -1,41 +1,22 @@
-def isPrime(num):
-    if num <= 1: return False
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
+def isPrime(n):
+    if n <= 1: return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
             return False
     return True
 
 def solution(n, k):
     answer = 0
+    a = ''
     
-    if k != 10:
-        a = []
-        while True:
-            a.append(n%k)
-            n = n//k
-            if n == 0: break
+    while n:
+        a += str(n%k)
+        n //= k
+    a = a[::-1]
 
-        a = a[::-1]
-    else: a = list(map(int, str(n)))
-
-    s, e, cnt = 0, 0, 0
-    while True:
-        if a[e] == 0:
-            num = 0
-            for j in reversed(a[s:e]):
-                num += (j*(10**cnt))
-                cnt += 1
-            s, e = e+1, e+1
-            if isPrime(num): answer += 1
-        e += 1
-        cnt = 0
-        
-        if e == len(a):
-            num = 0
-            for j in reversed(a[s:e]):
-                num += (j*(10**cnt))
-                cnt += 1
-            if isPrime(num): answer += 1
-            break
+    nums = a.split('0')
+    for n in nums:
+        if not n: continue
+        if isPrime(int(n)): answer += 1
 
     return answer
